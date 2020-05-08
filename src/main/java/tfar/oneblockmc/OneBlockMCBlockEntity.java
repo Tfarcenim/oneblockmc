@@ -7,8 +7,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.List;
 
 public class OneBlockMCBlockEntity extends TileEntity {
 	public OneBlockMCBlockEntity(TileEntityType<?> tileEntityTypeIn) {
@@ -17,28 +15,69 @@ public class OneBlockMCBlockEntity extends TileEntity {
 
 	public int index = 0;
 
-	public static final List<ItemStack> the_big_list = new ArrayList<>();
+	public static final RandomCollection<ItemStack> collection = new RandomCollection<>();
 
 	static {
-		the_big_list.add(new ItemStack(Blocks.GRASS_BLOCK));
-		the_big_list.add(new ItemStack(Blocks.OAK_LOG));
 
-		ItemStack chest1 = new ItemStack(Blocks.CHEST);
+		collection.add(412,new ItemStack(Blocks.OAK_WOOD));
+		collection.add(294,new ItemStack(Blocks.OAK_LEAVES));
 
-		/*the_big_list.add(new ItemStack(Blocks.CHESToneBlockMCBlockEntity -> {
+
+		ItemStack stack = new ItemStack(Blocks.CHEST);
+
+		CompoundNBT tag = stack.getOrCreateChildTag("BlockEntityTag");
+
+		tag.putString("LootTable",OneBlockMC.MODID+":chests/bow");
+
+		collection.add(59,stack);
+
+		ItemStack stack1 = new ItemStack(Blocks.CHEST);
+
+		CompoundNBT tag1 = stack1.getOrCreateChildTag("BlockEntityTag");
+
+		tag1.putString("LootTable",OneBlockMC.MODID+":chests/fishing_rod");
+
+		collection.add(59,stack1);
+
+		ItemStack stack2 = new ItemStack(Blocks.CHEST);
+
+		CompoundNBT tag2 = stack2.getOrCreateChildTag("BlockEntityTag");
+
+		tag2.putString("LootTable",OneBlockMC.MODID+":chests/enchanting_table");
+
+		collection.add(71,new ItemStack(Blocks.IRON_ORE));
+
+		collection.add(35,new ItemStack(Blocks.GOLD_ORE));
+
+
+		collection.add(12,new ItemStack(Blocks.DIAMOND_ORE));
+
+		collection.add(59,stack2);
+
+
+		//CompoundNBT nbt = chest1.getOrCreateChildTag("BlockEntityTag");
+		//nbt.
+
+
+		//collection.add(new ItemStack(Blocks.GRASS_BLOCK));
+		//collection.add(new ItemStack(Blocks.OAK_LOG));
+
+		//ItemStack chest1 = new ItemStack(Blocks.CHEST);
+
+		/*collection.add(new ItemStack(Blocks.CHESToneBlockMCBlockEntity -> {
 			LockableLootTileEntity.setLootTable(oneBlockMCBlockEntity.world,
 							oneBlockMCBlockEntity.world.rand,oneBlockMCBlockEntity.pos,new ResourceLocation(OneBlockMC.MODID,"chestphase1"));
 		}));*/
-		the_big_list.add(new ItemStack(Blocks.GRASS_BLOCK));
-		the_big_list.add(new ItemStack(Blocks.OAK_LOG));
-		the_big_list.add(new ItemStack(Blocks.CLAY));
-		the_big_list.add(new ItemStack(Blocks.OAK_LOG));
-		the_big_list.add(new ItemStack(Blocks.GRASS_BLOCK));
-		the_big_list.add(new ItemStack(Blocks.CLAY));
-		the_big_list.add(new ItemStack(Blocks.GRASS_BLOCK));
-		the_big_list.add(new ItemStack(Blocks.CLAY));
+		//collection.add(new ItemStack(Blocks.GRASS_BLOCK));
+		//collection.add(new ItemStack(Blocks.OAK_LOG));
+		//collection.add(new ItemStack(Blocks.CLAY));
+		//collection.add(new ItemStack(Blocks.OAK_LOG));
+		//collection.add(new ItemStack(Blocks.GRASS_BLOCK));
+		//collection.add(new ItemStack(Blocks.CLAY));
+		//collection.add(new ItemStack(Blocks.GRASS_BLOCK));
+		//collection.add(new ItemStack(Blocks.CLAY));
 
-		the_big_list.add(new ItemStack(Util.spawn()));
+		//collection.add(new ItemStack(Util.spawn()));
 
 
 	}
@@ -56,10 +95,8 @@ public class OneBlockMCBlockEntity extends TileEntity {
 		super.read(tag);
 	}
 
-	@Override
-	public void markDirty() {
-		super.markDirty();
-		world.notifyBlockUpdate(pos,getBlockState(),getBlockState(),3);
+	public void increment(){
+		index++;
+		markDirty();
 	}
-
 }
